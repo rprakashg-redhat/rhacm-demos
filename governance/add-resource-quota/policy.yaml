@@ -19,8 +19,8 @@ spec:
           remediationAction: inform
           severity: medium
           namespaceSelector:
-            exclude: ["kube-*", "openshift-*", "open-cluster-management-*"]
-            include: ["default"]
+            exclude: ["kube-*", "openshift-*", "open-cluster-management-*", "istio-*"]
+            include: ["ocpdemo"]
           object-templates:
           - complianceType: musthave
             objectDefinition:
