@@ -1,0 +1,10 @@
+- name: create namespace for policies
+  kubernetes.core.k8s:
+    state: present
+    api_key: "{{ token }}"      
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: policies
+      spec: {}

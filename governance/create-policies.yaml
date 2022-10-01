@@ -1,0 +1,9 @@
+- name: Automate pushing polcies to hub cluster
+  hosts: localhost
+  tasks:
+    - name: create namespace
+      include_tasks: ./tasks/create-namespace-task.yaml
+      
+    - name: intall tools
+      include_tasks: ./tasks/install-tools.yaml
+  
