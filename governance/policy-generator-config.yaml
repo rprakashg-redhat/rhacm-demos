@@ -33,7 +33,7 @@ policyDefaults:
 policies:
   - name: check-resource-quota
     manifests:
-    - path: ./manifests/ResourceQuota.yaml
+    - path: ./check-resource-quota/ResourceQuota.yaml
     namespaceSelector:
       include:
       - "*"
@@ -45,5 +45,22 @@ policies:
   
   - name: check-infra-nodes-on-cluster
     manifests:
-    - path: ./manifests/Node.yaml
+    - path: ./check-infra-nodes-on-cluster/Node.yaml
+  
+  - name: install-openshift-gitops
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+    remediationAction: enforce
+
+    manifests:
+    - path: ./install-openshift-gitops/subscription.yaml
+  
+  - name: install-compliance-operator
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+    remediationAction: enforce
+    manifests:
+    - path: ./install-compliance-operator/compliance.yaml
 ...
