@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: "{{ gitops.name }}"
+  namespace: "{{ gitops.namespace }}"
+spec:
+  channel: "{{ gitops.channel }}" 
+  installPlanApproval: "{{ approval_strategy }}"
+  name: "{{ gitops.operator }}" 
+  source:  "{{ source }}"
+  sourceNamespace: "{{ sourceNamespace }}" 

@@ -1,0 +1,64 @@
+- name: Configure multi cluster observability
+  hosts: localhost
+
+  tasks:
+    - name: import static var data
+      include_vars:
+        dir: vars/static
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
+
+    - name: set docker config json
+      command: "oc extract secret/pull-secret -n openshift-config --to=-"
+      register: pullsecret
+
+    - name: get cluster guid
+      command: oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster
+      register: clusterguid
+
+    - name: copy to yaml file
+      copy:
+        content: "DOCKER_CONFIG_JSON: {{ pullsecret.stdout | to_nice_yaml }}CLUSTER_GUID: {{ clusterguid.stdout }}"
+        dest: "vars/dynamic/pullsecret.yaml"
+
+    - name: import dynamic var data
+      include_vars:
+        dir: vars/dynamic
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
+    
+    - name: create s3 bucket
+      amazon.aws.s3_bucket:
+        name: grafana-{{ CLUSTER_GUID }}
+        aws_access_key: "{{ lookup('ansible.builtin.env', 'AWS_ACCESS_KEY_ID', default='') }}"
+        aws_secret_key: "{{ lookup('ansible.builtin.env', 'AWS_SECRET_ACCESS_KEY', default='') }}"
+
+    - name: create open cluster management observability namespace
+      kubernetes.core.k8s:
+        state: present
+        api_key: "{{ token }}"      
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: open-cluster-management-observability
+          spec: {}
+    
+    - name: create multi cluster hub operator secret pull secret
+      command: "oc create secret generic multiclusterhub-operator-pull-secret -n open-cluster-management-observability --from-literal=.dockerconfigjson='{{ DOCKER_CONFIG_JSON }}' --type=kubernetes.io/dockerconfigjson"
+    
+    - name: creating metrics object storage secret
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        state: present
+        apply: true
+        resource_definition: "{{ lookup('template', 'templates/secret.yaml.j2') | from_yaml }}"
+
+    - name: creating multi cluster observability resource
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        state: present
+        apply: true
+        resource_definition: "{{ lookup('template', 'templates/multiclusterobservability.yaml.j2') | from_yaml }}"

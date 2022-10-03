@@ -1,0 +1,83 @@
+- name: install ACM operators
+  hosts: localhost
+  tasks:
+    - name: import static var data
+      include_vars:
+        dir: ./vars/static
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
+
+    - name: create open cluster management namespace
+      kubernetes.core.k8s:
+        state: present
+        api_key: "{{ token }}"      
+        apply: true
+        validate_certs: false
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: "{{ namespace }}"
+          spec: {}
+
+    - name: create the operator group
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        validate_certs: false
+        apply: true
+        state: present
+        resource_definition: "{{ lookup('template', 'templates/operatorgroup.yaml.j2') | from_yaml }}"
+
+    - name: install acm operator
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        validate_certs: false
+        apply: true
+        state: present
+        resource_definition: "{{ lookup('template', 'templates/subscription.yaml.j2') | from_yaml }}"
+
+    - name: wait for operator to be ready
+      kubernetes.core.k8s_info:
+        api_key: "{{ token }}"
+        kind: ClusterServiceVersion
+        name: "advanced-cluster-management.v2.6.1"
+        api_version: operators.coreos.com/v1alpha1
+        namespace: "{{ namespace }}"
+      register: __acm_operator_install_result
+      until: "(__acm_operator_install_result['resources'][0]['status']['phase'] is defined) and (__acm_operator_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
+      retries: 10
+      delay: 10
+
+    - name: create multi cluster hub
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        validate_certs: false
+        apply: true
+        state: present
+        resource_definition: "{{ lookup('template', 'templates/hub.yaml.j2') | from_yaml }}"
+
+    - name: wait for the hub to be running
+      kubernetes.core.k8s_info:
+        api_key: "{{ token }}"
+        kind: MultiClusterHub
+        name:
+        api_version:
+        namespace: 
+      register: __hub_install_result
+      until: "(__hub_install_result['resources'][0]['status']['phase'] is defined) and (__hub_install_result['resources'][0]['status']['phase'] == 'Running')"
+      retries: 50
+      delay: 20
+    
+    - name: Install OpenShift GitOps on Hub Cluster
+      kubernetes.core.k8s:
+        api_key: "{{ token }}"
+        validate_certs: false
+        apply: true
+        state: present
+        resource_definition: "{{ lookup('template', 'templates/gitops.yaml.j2') | from_yaml }}"
+      register: __gitops_install_result
+      until: "(__gitops_install_result['resources'][0]['status']['phase'] is defined ) and (__gitops_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
+      retries: 10
+      delay: 10
+    

@@ -1,0 +1,14 @@
+channel: "release-2.6"
+approval_strategy: "Automatic"
+operator: "advanced-cluster-management"
+name: "acm-operator-subscription"
+namespace: "open-cluster-management"
+source: "redhat-operators"
+sourceNamespace: "openshift-marketplace"
+hub: "hub"
+kubeApiserver: https://api.demos.sandbox1421.opentlc.com:6443
+gitops:
+  name: gitops-operator-subscription
+  operator: openshift-gitops-operator
+  channel: stable
+  namespace: openshift-operators
