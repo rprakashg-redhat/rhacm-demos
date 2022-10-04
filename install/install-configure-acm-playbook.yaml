@@ -76,8 +76,16 @@
         apply: true
         state: present
         resource_definition: "{{ lookup('template', 'templates/gitops.yaml.j2') | from_yaml }}"
+    
+    - name: wait for gitops operator to be ready
+      kubernetes.core.k8s_info:
+        api_key: "{{ token }}"
+        kind: ClusterServiceVersion
+        name: "advanced-cluster-management.v2.6.1"
+        api_version: operators.coreos.com/v1alpha1
+        namespace: "{{ namespace }}"
       register: __gitops_install_result
-      until: "(__gitops_install_result['resources'][0]['status']['phase'] is defined ) and (__gitops_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
+      until: "(__gitops_install_result['resources'][0]['status']['phase'] is defined) and (__gitops_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
       retries: 10
-      delay: 10
+      delay: 10      
     

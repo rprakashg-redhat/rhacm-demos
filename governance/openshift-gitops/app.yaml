@@ -8,8 +8,8 @@ spec:
     namespace: policies
   project: policies
   source:
-    path: governance
     repoURL: https://github.com/rprakashg-redhat/rhacm-demos.git
+    path: governance
     targetRevision: main
   syncPolicy:
     automated:
