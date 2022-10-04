@@ -6,7 +6,8 @@ metadata:
 spec:
   destination:
     namespace: policies
-  project: policies
+    server: https://kubernetes.default.svc
+  project: default
   source:
     repoURL: https://github.com/rprakashg-redhat/rhacm-demos.git
     path: governance
