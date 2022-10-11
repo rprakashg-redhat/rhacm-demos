@@ -46,8 +46,8 @@
         namespace: "{{ namespace }}"
       register: __acm_operator_install_result
       until: "(__acm_operator_install_result['resources'][0]['status']['phase'] is defined) and (__acm_operator_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
-      retries: 10
-      delay: 10
+      retries: 15
+      delay: 15
 
     - name: create multi cluster hub
       kubernetes.core.k8s:

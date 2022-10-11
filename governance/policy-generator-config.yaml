@@ -44,6 +44,10 @@ policies:
       - "istio-*"
   
   - name: check-infra-nodes-on-cluster
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+        
     manifests:
     - path: ./check-infra-nodes-on-cluster/Node.yaml
   
