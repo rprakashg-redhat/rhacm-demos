@@ -1,8 +1,11 @@
+- name: print current working directory
+  debug: var=playbook_dir
+
 - name: Bastion task
   containers.podman.podman_container:
     name: 'bastion'
     image: 'busybox'
     volume:
       - .:/clusters
-    command: sleep 360
-    
+    command: 'ls -l clusters'
+    privileged: yes

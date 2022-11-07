@@ -7,6 +7,22 @@
         ignore_unknown_extensions: True
         extensions:
           - yaml
+    
+    - name: set docker config json
+      command: "oc extract secret/pull-secret -n openshift-config --to=-"
+      register: pullsecret
+
+    - name: copy to yaml file
+      copy:
+        content: "DOCKER_CONFIG_JSON: {{ pullsecret.stdout | to_nice_yaml }}"
+        dest: "vars/dynamic/pullsecret.yaml"
+
+    - name: import dynamic var data
+      include_vars:
+        dir: vars/dynamic
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
 
     - name: create open cluster management namespace
       kubernetes.core.k8s:
@@ -36,18 +52,21 @@
         apply: true
         state: present
         resource_definition: "{{ lookup('template', 'templates/subscription.yaml.j2') | from_yaml }}"
-
+    
     - name: wait for operator to be ready
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "advanced-cluster-management.v2.6.1"
+        name: "advanced-cluster-management.v2.6.2"
         api_version: operators.coreos.com/v1alpha1
         namespace: "{{ namespace }}"
       register: __acm_operator_install_result
       until: "(__acm_operator_install_result['resources'][0]['status']['phase'] is defined) and (__acm_operator_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
       retries: 15
       delay: 15
+      
+    - name: create generic secret pull secret to be used with multi cluster hub
+      command: "oc create secret generic rh-pullsecret -n open-cluster-management --from-literal=.dockerconfigjson='{{ DOCKER_CONFIG_JSON }}' --type=kubernetes.io/dockerconfigjson"
 
     - name: create multi cluster hub
       kubernetes.core.k8s:
@@ -81,9 +100,9 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "advanced-cluster-management.v2.6.1"
+        name: "openshift-gitops-operator.v1.5.7"
         api_version: operators.coreos.com/v1alpha1
-        namespace: "{{ namespace }}"
+        namespace: "openshift-gitops"
       register: __gitops_install_result
       until: "(__gitops_install_result['resources'][0]['status']['phase'] is defined) and (__gitops_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
       retries: 10

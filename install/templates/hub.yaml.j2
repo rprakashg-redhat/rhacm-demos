@@ -4,5 +4,6 @@ kind: MultiClusterHub
 metadata:
   name: {{ hub }}
   namespace: {{ namespace }}
-spec: {}
+spec: 
+  imagePullSecret: rh-pullsecret
 ...

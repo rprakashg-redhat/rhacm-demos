@@ -1,4 +1,4 @@
 openshift:
-  apiServer: api.demos.sandbox1421.opentlc.com
+  apiServer: api.demos.sandbox1615.opentlc.com
   apiServerport: 6443
   protocol: https

@@ -1,9 +1,11 @@
 # Local .terraform directories
-**/.terraform/*
+**/*.terraform/*
+**/*.terraform.lock.hcl
+**/pull-secret.txt
 
 # .tfstate files
-*.tfstate
-*.tfstate.*
+**/*.tfstate
+**/*.tfstate.*
 
 # Crash log files
 crash.log
@@ -32,3 +34,5 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+**/.DS_Store

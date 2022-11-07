@@ -1,3 +1,2 @@
-aws_region: us-west-2
-azure_region: ''
-gke_region: ''
+eks:
+  region: us-west-2
