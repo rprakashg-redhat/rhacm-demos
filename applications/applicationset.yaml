@@ -1,7 +1,8 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: book-import
+  name: book-import-application-set
   namespace: openshift-gitops
 spec:
   generators:
@@ -11,9 +12,11 @@ spec:
         matchLabels:
           cluster.open-cluster-management.io/placement: book-import-placement
       requeueAfterSeconds: 180
+  syncPolicy:
+    preserveResourcesOnDeletion: false    
   template:
     metadata:
-      name: -{{name}}
+      name: book-import-{{name}}
     spec:  
       project: default
 
@@ -23,12 +26,20 @@ spec:
         targetRevision: main
 
       destination:
-        server: https://kubernetes.default.svc
+        server: "{{server}}"
         namespace: gitops
 
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - PruneLast=true
+          - Replace=true
+          - ApplyOutOfSyncOnly=true
+          - Validate=false
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
