@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: book-import
+  namespace: openshift-gitops
+spec:
+  generators:
+  - clusterDecisionResource:
+      configMapRef: acm-placement
+      labelSelector:
+        matchLabels:
+          cluster.open-cluster-management.io/placement: -placement
+      requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: -{{name}}
+    spec:  
+      project: default
+
+      source:
+        repoURL: https://github.com/rprakashg-redhat/rhacm-demos.git
+        path: applications/book-import
+        targetRevision: main
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: gitops
+
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: book-import-placement
+  namespace: openshift-gitops
+spec:
+  predicates:
+    - requiredClusterSelector:
+        labelSelector:
+          matchExpressions:
+            - key: environment
+              operator: In
+              values:
+                - demo

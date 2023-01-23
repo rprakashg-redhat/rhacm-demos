@@ -57,7 +57,7 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "advanced-cluster-management.v2.6.2"
+        name: "advanced-cluster-management.v2.6.3"
         api_version: operators.coreos.com/v1alpha1
         namespace: "{{ namespace }}"
       register: __acm_operator_install_result
@@ -100,7 +100,7 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "openshift-gitops-operator.v1.5.7"
+        name: "openshift-gitops-operator.v1.5.8"
         api_version: operators.coreos.com/v1alpha1
         namespace: "openshift-gitops"
       register: __gitops_install_result
