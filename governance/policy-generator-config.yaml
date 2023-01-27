@@ -19,7 +19,7 @@ policyDefaults:
   complianceType: "musthave"
   
   evaluationInterval:
-    compliant: 30m
+    compliant: 1m
     noncompliant: 45s
   
   remediationAction: "inform"
