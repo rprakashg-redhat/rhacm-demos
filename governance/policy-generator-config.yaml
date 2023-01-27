@@ -28,7 +28,7 @@ policyDefaults:
 
   placement:
     clusterSelectors:
-      environment: "production"
+      environment: "demo"
 
 policies:
   - name: check-resource-quota
