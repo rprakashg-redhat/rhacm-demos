@@ -15,7 +15,20 @@
     - name: copy to yaml file
       copy:
         content: "DOCKER_CONFIG_JSON: {{ pullsecret.stdout | to_nice_yaml }}"
-        dest: "vars/dynamic/pullsecret.yaml"
+        dest: "./vars/dynamic/main.yaml"
+
+    - name: login to cluster
+      community.okd.openshift_auth:
+        username: "{{ username }}"
+        password: "{{ password }}"
+        host: "{{ apiserver }}"
+        validate_certs: false
+      register: ocp_auth_results
+
+    - name: write the token to dynamic vars
+      ansible.builtin.lineinfile:
+        line: "token: {{ ocp_auth_results.openshift_auth.api_key }}"
+        path: "./vars/dynamic/main.yaml"
 
     - name: import dynamic var data
       include_vars:
@@ -57,7 +70,7 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "advanced-cluster-management.v2.6.3"
+        name: "advanced-cluster-management.v2.6.4"
         api_version: operators.coreos.com/v1alpha1
         namespace: "{{ namespace }}"
       register: __acm_operator_install_result
@@ -80,9 +93,9 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: MultiClusterHub
-        name:
-        api_version:
-        namespace: 
+        name: '{{ hub }}'
+        api_version: operator.open-cluster-management.io/v1
+        namespace: '{{ namespace }}'
       register: __hub_install_result
       until: "(__hub_install_result['resources'][0]['status']['phase'] is defined) and (__hub_install_result['resources'][0]['status']['phase'] == 'Running')"
       retries: 50
@@ -100,7 +113,7 @@
       kubernetes.core.k8s_info:
         api_key: "{{ token }}"
         kind: ClusterServiceVersion
-        name: "openshift-gitops-operator.v1.5.9"
+        name: "openshift-gitops-operator.v1.5.10"
         api_version: operators.coreos.com/v1alpha1
         namespace: "openshift-gitops"
       register: __gitops_install_result
