@@ -1,4 +1,5 @@
 generators:
   - policy-generator-config.yaml
+  - kyverno-policies-config.yaml
 commonAnnotations:
   argocd.argoproj.io/compare-options: IgnoreExtraneous

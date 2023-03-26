@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: python-webserver
+  name: python-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: python-webserver
+  template:
+    metadata:
+      labels:
+        name: python-webserver
+    spec:
+      containers:
+      - image: registry.access.redhat.com/ubi8/python-38@sha256:8af33c27f98cbd4417171714bd276162aa7f22b00bee2f0f46c204fb1d25ecef
+        name: hello-world-python
+        imagePullPolicy: IfNotPresent
+        command:
+        - python3
+        args:
+        - -m
+        - http.server
+        ports:
+        - containerPort: 8080
+          name: http-server
