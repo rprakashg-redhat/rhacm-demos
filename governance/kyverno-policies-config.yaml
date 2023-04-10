@@ -24,7 +24,7 @@ policyDefaults:
     compliant: 1m
     noncompliant: 45s
   
-  remediationAction: "inform"
+  remediationAction: "enforce"
   
   severity: "medium"
 
