@@ -34,4 +34,5 @@ policyDefaults:
 
 policies:
   - name: disallow-service-type-lb
-  
+    manifests:
+    - path: disallow-service-type-lb/policy.yaml
