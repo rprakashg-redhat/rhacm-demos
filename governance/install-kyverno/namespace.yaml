@@ -1,0 +1,20 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: policy-kyverno-namespace
+spec:
+  remediationAction: inform
+  severity: low
+  object-templates:
+    - complianceType: musthave
+      objectDefinition:
+        kind: Namespace
+        apiVersion: v1
+        metadata:
+          name: kyverno
+    - complianceType: musthave
+      objectDefinition:
+        kind: Namespace
+        apiVersion: v1
+        metadata:
+          name: kyverno-channel

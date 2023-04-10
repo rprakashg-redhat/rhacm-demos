@@ -52,16 +52,7 @@ policies:
         
     manifests:
     - path: ./check-infra-nodes-on-cluster/Node.yaml
-  
-  - name: install-openshift-gitops
-    placement:
-      clusterSelectors:
-        vendor: "OpenShift"
-    remediationAction: enforce
-
-    manifests:
-    - path: ./install-openshift-gitops/subscription.yaml
-  
+    
   - name: install-compliance-operator
     placement:
       clusterSelectors:
@@ -69,4 +60,9 @@ policies:
     remediationAction: enforce
     manifests:
     - path: ./install-compliance-operator/compliance.yaml
+
+  - name: install-kyverno
+    manifests:
+    - path: ./install-kyverno/namespace.yaml
+    - path: ./install-kyverno/policy.yaml
 ...
