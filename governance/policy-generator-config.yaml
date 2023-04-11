@@ -61,8 +61,4 @@ policies:
     manifests:
     - path: ./install-compliance-operator/compliance.yaml
 
-  - name: install-kyverno
-    manifests:
-    - path: ./install-kyverno/namespace.yaml
-    - path: ./install-kyverno/policy.yaml
 ...
