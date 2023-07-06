@@ -2,7 +2,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
-  name: kyverno-configuration-policies
+  name: configuration-policies
 
 policyDefaults:
   namespace: "policies"
@@ -24,7 +24,7 @@ policyDefaults:
     compliant: 1m
     noncompliant: 45s
   
-  remediationAction: "enforce"
+  remediationAction: "inform"
   
   severity: "medium"
 
@@ -32,7 +32,20 @@ policyDefaults:
     clusterSelectors:
       environment: "demo"
 
-policies:
-  - name: disallow-service-type-lb
+policies:    
+  - name: install-compliance-operator
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+    remediationAction: enforce
     manifests:
-    - path: disallow-service-type-lb/policy.yaml
+    - path: ./install-compliance-operator/compliance.yaml
+
+  - name: install-postgresql-operator
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+    remediationAction: enforce
+    manifests:
+    - path: ./install-postgresql-operator/postgresql.yaml
+...

@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/rprakashg-redhat/rhacm-demos.git
-    path: governance
+    path: governance/policies
     targetRevision: main
   syncPolicy:
     automated:
