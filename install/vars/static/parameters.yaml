@@ -6,7 +6,6 @@ namespace: "open-cluster-management"
 source: "redhat-operators"
 sourceNamespace: "openshift-marketplace"
 hub: "hub"
-kubeApiserver: https://api.demos.sandbox1421.opentlc.com:6443
 pullsecret: rh-pullsecret
 gitops:
   name: gitops-operator-subscription
