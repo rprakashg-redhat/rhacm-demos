@@ -30,7 +30,7 @@ policyDefaults:
 
   placement:
     clusterSelectors:
-      environment: "development"
+      environment: "demos"
 
 policies:    
   - name: install-compliance-operator
@@ -45,7 +45,7 @@ policies:
     placement:
       clusterSelectors:
         vendor: "OpenShift"
-        environment: demos
+        environment: development
     remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
