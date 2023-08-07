@@ -30,7 +30,7 @@ policyDefaults:
 
   placement:
     clusterSelectors:
-      environment: "demo"
+      environment: "development"
 
 policies:    
   - name: install-compliance-operator
