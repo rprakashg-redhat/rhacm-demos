@@ -1,4 +1,4 @@
-channel: "release-2.6"
+channel: "release-2.8"
 approval_strategy: "Automatic"
 operator: "advanced-cluster-management"
 name: "acm-operator-subscription"
@@ -10,5 +10,5 @@ pullsecret: rh-pullsecret
 gitops:
   name: gitops-operator-subscription
   operator: openshift-gitops-operator
-  channel: stable
+  channel: latest
   namespace: openshift-operators
