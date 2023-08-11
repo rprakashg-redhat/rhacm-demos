@@ -46,6 +46,7 @@ policies:
       clusterSelectors:
         vendor: "OpenShift"
         environment: development
+        clusterType: "Workload"
     remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
