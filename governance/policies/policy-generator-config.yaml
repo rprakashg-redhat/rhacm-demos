@@ -54,7 +54,7 @@ policies:
     placement:
       clusterSelectors:
         vendor: "OpenShift"
-        clusterTYpe: "Workload"
+        clusterType: "Workload"
     manifests:
     - path: ./install-rhacs/rhacs.yaml
     remediationAction: enforce
