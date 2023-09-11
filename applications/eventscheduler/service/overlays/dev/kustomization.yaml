@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+patches:
+  - target:
+      kind: Deployment
+      name: scheduler
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/image"
+        value:                    "ghcr.io/rprakashg-redhat/eventscheduler@sha256:0354fea55dca34107502630d5b582c603c036bec5935b2a7f95bb9a6bed36f3b"

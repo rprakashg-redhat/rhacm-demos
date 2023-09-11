@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ormdemo
+  labels:
+    app: ormdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ormdemo
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: ormdemo
+    spec:
+      containers:
+      - name: ormdemo
+        image: "ghcr.io/hibernate-reactive-panache-quickstart@sha256:952489da0b346752408ad7758963b0156b6a46f099d944c394f21a708395772b"
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+        - name: POSTGRESCLUSTER_USER
+          valueFrom:
+            secretKeyRef:
+              name: hippo-pguser-hippo
+              key: user
+              optional: false
+        - name: POSTGRESCLUSTER_USER_PWD
+          valueFrom:
+            secretKeyRef:
+              name: hippo-pguser-hippo
+              key: password
+              optional: false
+        - name: HOST
+          valueFrom:
+            secretKeyRef:
+              name: hippo-pguser-hippo
+              key: host
+              optional: false
+        - name: DBNAME
+          valueFrom:
+            secretKeyRef:
+              name: hippo-pguser-hippo
+              key: dbname
+              optional: false
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 64Mi
+        imagePullSecrets:
+        - ghcrcreds

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: schedule
+  name: scheduler
+  labels:
+    app: scheduler
+    service: scheduler
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: scheduler
+    version: v1

@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: "ormdemo-db"
+  namespace: openshift-gitops
+spec:
+  generators:      
+  - clusterDecisionResource:
+      configMapRef: acm-placement
+      labelSelector:
+        matchLabels:
+          cluster.open-cluster-management.io/placement: ormdemo-dev-placement
+      requeueAfterSeconds: 180
+
+  template:
+    metadata:
+      name: 'ormdemo-db-{{name}}'
+    spec:
+      source:
+        repoURL: "https://github.com/rprakashg-redhat/hibernate-reactive-panache-quickstart-ops"
+        path: "apps/db/overlays/dev"
+        targetRevision: "HEAD"
+
+      destination:
+        namespace: "demos"
+        server:  "{{server}}"
+
+      project: default 
+
+  syncPolicy:
+    syncOptions:
+    - ApplyOutOfSyncOnly=true
+    - PruneLast=true
+    - CreateNamespace=true
+    - Replace=true
+      
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true

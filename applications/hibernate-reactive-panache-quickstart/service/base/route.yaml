@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: ormdemo
+  labels:
+    app: ormdemo
+    service: ormdemo
+spec:
+  to:
+    kind: Service
+    name: ormdemo
+  tls: null
+  port:
+    targetPort: http

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ormdemo
+  labels:
+    app: ormdemo
+    service: ormdemo
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: ormdemo

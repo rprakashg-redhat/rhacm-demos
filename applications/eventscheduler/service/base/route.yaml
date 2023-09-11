@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: scheduler
+  namespace: schedule
+  labels:
+    app: scheduler
+    service: scheduler
+spec:
+  to:
+    kind: Service
+    name: scheduler
+  tls: null
+  port:
+    targetPort: http

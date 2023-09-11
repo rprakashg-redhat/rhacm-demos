@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+patches:
+  - target:
+      kind: Deployment
+      name: ormdemo
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/image"
+        value:  "ghcr.io/rprakashg-redhat/hibernate-reactive-panache-quickstart@sha256:30e576ae03e274510bfd5c72f0fa51e4a9f46eb70528f47d6598a007b7838066"

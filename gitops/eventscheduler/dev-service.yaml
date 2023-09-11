@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: "scheduler-service"
+  namespace: openshift-gitops
+spec:
+  generators:      
+  - clusterDecisionResource:
+      configMapRef: acm-placement
+      labelSelector:
+        matchLabels:
+          cluster.open-cluster-management.io/placement: scheduler-dev-placement
+      requeueAfterSeconds: 180
+
+  template:
+    metadata:
+      name: 'scheduler-service-{{name}}'
+    spec:
+      source:
+        repoURL: "https://github.com/rprakashg-redhat/scheduler-ops"
+        path: "apps/service/overlays/dev"
+        targetRevision: "HEAD"
+
+      destination:
+        namespace: "schedule"
+        server:  "{{server}}"
+
+      project: default 
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
+    - Replace=true
+    - ApplyOutOfSyncOnly=true
+
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
