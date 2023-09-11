@@ -10,7 +10,7 @@ spec:
       configMapRef: acm-placement
       labelSelector:
         matchLabels:
-          cluster.open-cluster-management.io/placement: book-import-placement
+          cluster.open-cluster-management.io/placement: ormdemo-dev-placement
       requeueAfterSeconds: 180
   syncPolicy:
     preserveResourcesOnDeletion: false    
@@ -27,7 +27,7 @@ spec:
 
       destination:
         server: "{{server}}"
-        namespace: gitops
+        namespace: demos
 
       syncPolicy:
         syncOptions:

@@ -17,8 +17,8 @@ spec:
       name: 'ormdemo-db-{{name}}'
     spec:
       source:
-        repoURL: "https://github.com/rprakashg-redhat/hibernate-reactive-panache-quickstart-ops"
-        path: "apps/db/overlays/dev"
+        repoURL: "https://github.com/rprakashg-redhat/rhacm-demos.git"
+        path: "applications/hibernate-reactive-panache-quickstart/db/overlays/dev"
         targetRevision: "HEAD"
 
       destination:
