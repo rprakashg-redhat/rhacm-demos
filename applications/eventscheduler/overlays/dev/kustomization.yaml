@@ -9,4 +9,4 @@ patches:
     patch: |-
       - op: replace
         path: "/spec/template/spec/containers/0/image"
-        value:                    "ghcr.io/rprakashg-redhat/eventscheduler@sha256:0354fea55dca34107502630d5b582c603c036bec5935b2a7f95bb9a6bed36f3b"
+        value:                     "ghcr.io/rprakashg-redhat/eventscheduler@sha256:9e3bf8fbe5740c1d6b39552ce5d6644d6f487bbfbf165e1c488d0f9d0a5256f1"
