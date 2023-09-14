@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: "ormdemo-db"
+  name: "postgresql-cluster"
   namespace: openshift-gitops
 spec:
   generators:      
@@ -9,16 +9,16 @@ spec:
       configMapRef: acm-placement
       labelSelector:
         matchLabels:
-          cluster.open-cluster-management.io/placement: ormdemo-dev-placement
+          cluster.open-cluster-management.io/placement: devenvironment-placement
       requeueAfterSeconds: 180
 
   template:
     metadata:
-      name: 'ormdemo-db-{{name}}'
+      name: 'postgresql-cluster-{{name}}'
     spec:
       source:
         repoURL: "https://github.com/rprakashg-redhat/rhacm-demos.git"
-        path: "applications/hibernate-reactive-panache-quickstart/db/overlays/dev"
+        path: "applications/postgresql/overlays/dev"
         targetRevision: "HEAD"
 
       destination:

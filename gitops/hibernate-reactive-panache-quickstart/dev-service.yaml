@@ -9,7 +9,7 @@ spec:
       configMapRef: acm-placement
       labelSelector:
         matchLabels:
-          cluster.open-cluster-management.io/placement: ormdemo-dev-placement
+          cluster.open-cluster-management.io/placement: devenvironment-placement
       requeueAfterSeconds: 180
 
   template:
