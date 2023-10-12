@@ -51,12 +51,12 @@ policies:
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
       
-  #- name: install-rhacs
-  #  placement:
-  #    clusterSelectors:
-  #      vendor: "OpenShift"
-  #      clusterType: "Workload"
-  #  manifests:
-  #  - path: ./install-rhacs/rhacs.yaml
-  #  remediationAction: enforce
+  - name: install-rhacs
+    placement:
+      clusterSelectors:
+        vendor: "OpenShift"
+        clusterType: "Workload"
+    manifests:
+    - path: ./install-rhacs/rhacs.yaml
+    remediationAction: enforce
 ...
