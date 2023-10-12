@@ -28,13 +28,5 @@ spec:
       project: default 
 
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-    - PruneLast=true
-    - Replace=true
-    - ApplyOutOfSyncOnly=true
-
-    automated:
-      prune: true
-      allowEmpty: true
-      selfHeal: true
+    PreserveResourcesOnDeletion: false    
+    applicationsSync: sync

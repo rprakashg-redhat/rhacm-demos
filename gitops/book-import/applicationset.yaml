@@ -12,8 +12,11 @@ spec:
         matchLabels:
           cluster.open-cluster-management.io/placement: ormdemo-dev-placement
       requeueAfterSeconds: 180
+  
   syncPolicy:
     preserveResourcesOnDeletion: false    
+    applicationsSync: sync
+  
   template:
     metadata:
       name: book-import-{{name}}
@@ -27,19 +30,7 @@ spec:
 
       destination:
         server: "{{server}}"
-        namespace: demos
-
-      syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
-          - PruneLast=true
-          - Replace=true
-          - ApplyOutOfSyncOnly=true
-          - Validate=false
-        automated:
-          prune: true
-          allowEmpty: true
-          selfHeal: true
+        namespace: demos      
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
