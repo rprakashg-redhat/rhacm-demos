@@ -30,24 +30,13 @@ spec:
               name: hippo-pguser-hippo
               key: user
               optional: false
-        - name: POSTGRESCLUSTER_USER_PWD
+        - name: POSTGRESCLUSTER_JDBC-URI
           valueFrom:
             secretKeyRef:
               name: hippo-pguser-hippo
-              key: password
+              key: jdbc-uri
               optional: false
-        - name: HOST
-          valueFrom:
-            secretKeyRef:
-              name: hippo-pguser-hippo
-              key: host
-              optional: false
-        - name: DBNAME
-          valueFrom:
-            secretKeyRef:
-              name: hippo-pguser-hippo
-              key: dbname
-              optional: false
+
         resources:
           limits:
             cpu: 1000m
