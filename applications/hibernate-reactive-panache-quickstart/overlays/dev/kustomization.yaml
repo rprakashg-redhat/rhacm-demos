@@ -9,4 +9,4 @@ patches:
     patch: |-
       - op: replace
         path: "/spec/template/spec/containers/0/image"
-        value:       "ghcr.io/rprakashg-redhat/hibernate-reactive-panache-quickstart@sha256:f3d1101745d381d155af130407f24de662b66c99764c4fc1a1073dfe13b1e2f0"
+        value:        "ghcr.io/rprakashg-redhat/hibernate-reactive-panache-quickstart-unsecured@sha256:19df97e195d3f884ae6599da90b21e4dd4ccfdb7340b21a3960a7f78d837b5ec"
