@@ -1,2 +1,2 @@
 resources:
-- CM-Configuration-Management
+- CM-Configuration-Management/policy-gatekeeper-operator-downstream.yaml
