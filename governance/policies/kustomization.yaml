@@ -1,2 +1,2 @@
 resources:
-- *\*.yaml
+- */*.yaml
