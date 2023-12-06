@@ -1,3 +1,2 @@
 resources:
-- CM-Configuration-Management/policy-gatekeeper-operator-downstream.yaml
-- CM-Configuration-Management/policy-kyverno-operator.yaml
+- CM-Configuration-Management/*.yaml
