@@ -1,0 +1,54 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: gatekeeper-operator-product
+  namespace: openshift-operators
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: gatekeeper-operator-product
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  namespace: openshift-gatekeeper-system
+spec:
+  displayName: Gatekeeper Operator
+status:
+  phase: Succeeded
+---
+apiVersion: operator.gatekeeper.sh/v1alpha1
+kind: Gatekeeper
+metadata:
+  name: gatekeeper
+spec:
+  audit:
+    auditChunkSize: 500
+    logLevel: INFO
+    replicas: 1
+  validatingWebhook: Enabled
+  mutatingWebhook: Disabled
+  webhook:
+    emitAdmissionEvents: Enabled
+    logLevel: INFO
+    replicas: 2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: openshift-gatekeeper-system
+  labels:
+    control-plane: audit-controller
+status:
+  phase: Running   # check the pod status to determine if operator is running or not
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: openshift-gatekeeper-system
+  labels:
+    control-plane: controller-manager
+status:
+  phase: Running   # check the pod status to determine if operator is running or not

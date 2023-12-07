@@ -26,37 +26,25 @@ policyDefaults:
   
   remediationAction: "inform"
   
-  severity: "medium"
+  severity: "high"
 
   placement:
     clusterSelectors:
-      environment: "demos"
+      environment: "dev"
+      vendor: "OpenShift"
 
 policies:    
-  - name: install-compliance-operator
-    placement:
-      clusterSelectors:
-        vendor: "OpenShift"
-    remediationAction: enforce
+  - name: install-gatekeeper-operator
     manifests:
-    - path: ./install-compliance-operator/compliance.yaml
+    - path: ./install-gatekeeper-operator/gatekeeper.yaml
 
   - name: install-postgresql-operator
     placement:
       clusterSelectors:
         vendor: "OpenShift"
-        environment: development
+        environment: dev
         clusterType: "Workload"
     remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
-      
-  #- name: install-rhacs
-  #  placement:
-  #    clusterSelectors:
-  #      vendor: "OpenShift"
-  #      clusterType: "Workload"
-  #  manifests:
-  #  - path: ./install-rhacs/rhacs.yaml
-  #  remediationAction: enforce
 ...

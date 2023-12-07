@@ -20,17 +20,17 @@ The Ansible playbook will install ACM operator, create a hub cluster and also in
 
 * We are going to use an Init container to copy the Kustomize Policy generator plugin from RHACM application subscription container image to OpenShift GitOps container that runs kustomize. Additionally, OpenShift GitOps must be configured to provide the --enable-alpha-plugins flag when you run Kustomize. Run the following command to configure OpenShift GitOps as shown below
 ```
-oc -n openshift-gitops patch argocd openshift-gitops --type merge --patch "$(curl https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/openshift-gitops/argocd-patch.yaml)"
+oc -n openshift-gitops patch argocd openshift-gitops --type merge --patch "$(curl https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/deploy/argocd-patch.yaml)"
 ```
 
 * Next we need to grant OpenShift Gitops access to create policies on the RHACM hub cluster. We are going to do that by creating a ClusterRole and ClusterRoleBinding to assign appropriate permissions to Service Account used by OpenShift GitOps. Run the command below
 ```
-oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/openshift-gitops/cluster-role.yaml
+oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/deploy/cluster-role.yaml
 ```
 
 * Lastly we will create the ArgoCD application that will generate the policies on RHACM hub cluster using OpenShift GitOps. Run the command below
 ```
-oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/openshift-gitops/app.yaml
+oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/deploy/app.yaml
 ```
 
 Login to the ArgoCD console to view the status of the application. Additionally you can examine the topology view in RHACM hub cluster. You will see 4 policies created
