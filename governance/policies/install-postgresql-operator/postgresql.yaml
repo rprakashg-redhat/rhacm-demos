@@ -10,4 +10,13 @@ spec:
   name: crunchy-postgres-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  namespace: openshift-operators
+spec:
+  displayName: Crunchy Postgres for Kubernetes
+status:
+  phase: Succeeded
 ...
