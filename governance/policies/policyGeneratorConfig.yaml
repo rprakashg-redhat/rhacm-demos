@@ -24,7 +24,7 @@ policyDefaults:
     compliant: 1m
     noncompliant: 45s
   
-  remediationAction: "inform"
+  remediationAction: "enforce"
   
   severity: "high"
 
@@ -35,19 +35,22 @@ policyDefaults:
 
 policies:    
   - name: install-gatekeeper-operator
-    remediationAction: enforce
+    disabled: false
     manifests:
-    - path: ./install-gatekeeper-operator/gatekeeper.yaml
+    - path: ./install-gatekeeper-operator
 
   - name: install-postgresql-operator
-    remediationAction: enforce
+    disabled: false
     manifests:
-    - path: ./install-postgresql-operator/postgresql.yaml
-  
+    - path: ./install-postgresql-operator
+
   - name: container-deny-latest-tag
-    remediationAction: enforce
+    categories:
+    - setup
+    controls: 
+    - setup
+    disabled: false
     manifests:
-    - path: ./container-deny-latest-tag/constraint.yaml
-    - path: ./container-deny-latest-tag/template.yaml
+    - path: input/container-deny-latest-tag
 
 ...
