@@ -1,3 +1,4 @@
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
@@ -52,3 +53,4 @@ metadata:
     control-plane: controller-manager
 status:
   phase: Running   # check the pod status to determine if operator is running or not
+...  

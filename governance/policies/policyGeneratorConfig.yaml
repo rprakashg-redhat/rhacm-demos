@@ -35,10 +35,12 @@ policyDefaults:
 
 policies:    
   - name: install-gatekeeper-operator
+    remediationAction: enforce
     manifests:
     - path: ./install-gatekeeper-operator/gatekeeper.yaml
 
   - name: install-postgresql-operator
+    remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
 ...
