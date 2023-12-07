@@ -44,9 +44,10 @@ policies:
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
   
-  - name: install-kyverno-operator
+  - name: container-deny-latest-tag
     remediationAction: enforce
     manifests:
-    - path: ./install-kyverno-operator/kyverno.yaml
-    
+    - path: ./container-deny-latest-tag/constraint.yaml
+    - path: ./container-deny-latest-tag/template.yaml
+
 ...
