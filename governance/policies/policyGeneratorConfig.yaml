@@ -39,12 +39,6 @@ policies:
     - path: ./install-gatekeeper-operator/gatekeeper.yaml
 
   - name: install-postgresql-operator
-    placement:
-      clusterSelectors:
-        vendor: "OpenShift"
-        environment: dev
-        clusterType: "Workload"
-    remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
 ...
