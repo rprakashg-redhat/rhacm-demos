@@ -38,7 +38,6 @@
     - name: create open cluster management observability namespace
       kubernetes.core.k8s:
         state: present
-        api_key: "{{ token }}"      
         definition:
           apiVersion: v1
           kind: Namespace
@@ -51,14 +50,12 @@
     
     - name: creating metrics object storage secret
       kubernetes.core.k8s:
-        api_key: "{{ token }}"
         state: present
         apply: true
         resource_definition: "{{ lookup('template', 'templates/secret.yaml.j2') | from_yaml }}"
 
     - name: creating multi cluster observability resource
       kubernetes.core.k8s:
-        api_key: "{{ token }}"
         state: present
         apply: true
         resource_definition: "{{ lookup('template', 'templates/multiclusterobservability.yaml.j2') | from_yaml }}"
