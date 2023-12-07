@@ -37,12 +37,12 @@ policies:
   - name: install-gatekeeper-operator
     disabled: false
     manifests:
-    - path: ./install-gatekeeper-operator
+    - path: install-gatekeeper-operator
 
   - name: install-postgresql-operator
     disabled: false
     manifests:
-    - path: ./install-postgresql-operator
+    - path: install-postgresql-operator
 
   - name: container-deny-latest-tag
     categories:
@@ -51,6 +51,6 @@ policies:
     - setup
     disabled: false
     manifests:
-    - path: input/container-deny-latest-tag
+    - path: container-deny-latest-tag
 
 ...
