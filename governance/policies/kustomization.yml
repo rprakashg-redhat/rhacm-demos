@@ -1,5 +1,5 @@
 generators:
-  - CM-Configuration-Management\config.yaml
+  - policyGeneratorConfig.yaml
 
 commonAnnotations:
   argocd.argoproj.io/compare-options: IgnoreExtraneous
