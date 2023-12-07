@@ -1,4 +1,5 @@
 ---
+apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: crunchy-postgres-operator
@@ -10,4 +11,3 @@ spec:
   source: certified-operators
   sourceNamespace: openshift-marketplace
 ...
-  
