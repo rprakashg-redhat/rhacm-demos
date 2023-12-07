@@ -43,4 +43,10 @@ policies:
     remediationAction: enforce
     manifests:
     - path: ./install-postgresql-operator/postgresql.yaml
+  
+  - name: install-kyverno-operator
+    remediationAction: enforce
+    manifests:
+    - path: ./install-kyverno-operator/kyverno.yaml
+    
 ...
