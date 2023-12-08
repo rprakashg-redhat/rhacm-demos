@@ -17,13 +17,11 @@
 
     - name: deleting multi cluster observability resource
       kubernetes.core.k8s:
-        api_key: "{{ token }}"
         state: absent
         resource_definition: "{{ lookup('template', 'templates/multiclusterobservability.yaml.j2') | from_yaml }}"
 
     - name: deleting metrics object storage secret
       kubernetes.core.k8s:
-        api_key: "{{ token }}"
         state: absent
         resource_definition: "{{ lookup('template', 'templates/secret.yaml.j2') | from_yaml }}"
 
@@ -33,7 +31,6 @@
     - name: deleting open cluster management observability namespace
       kubernetes.core.k8s:
         state: absent
-        api_key: "{{ token }}"      
         definition:
           apiVersion: v1
           kind: Namespace
