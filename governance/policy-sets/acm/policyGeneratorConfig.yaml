@@ -36,6 +36,6 @@ policies:
     manifests:
     - path: acm/install-postgresql-operator
 policySets:
-- description: 
+- description: A set of ACM best practices policies for all managed clusters
   name: acm-policyset
 ...

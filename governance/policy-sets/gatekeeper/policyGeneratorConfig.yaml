@@ -3,8 +3,6 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
   name: gatekeeper-policyset
-placementBindingDefaults:
-  name: gatekeeper-policyset
 policyDefaults:
   policyAnnotations: {"policy.open-cluster-management.io/disable-templates": "true"}
   categories:
