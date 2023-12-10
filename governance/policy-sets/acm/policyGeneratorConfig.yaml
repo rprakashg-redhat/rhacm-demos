@@ -29,12 +29,12 @@ policies:
   - name: install-gatekeeper-operator
     disabled: false
     manifests:
-    - path: install-gatekeeper-operator
+    - path: acm/install-gatekeeper-operator
 
   - name: install-postgresql-operator
     disabled: false
     manifests:
-    - path: install-postgresql-operator
+    - path: acm/install-postgresql-operator
 policySets:
 - description: 
   name: acm-policyset

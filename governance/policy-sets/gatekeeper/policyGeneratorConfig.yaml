@@ -22,7 +22,7 @@ policies:
   - name: container-deny-latest-tag
     disabled: false
     manifests:
-    - path: container-deny-latest-tag
+    - path: gatekeeper/container-deny-latest-tag
     
 policySets:
   - description: A set of open policy agent gatekeeper admission controls that require best practices to be followed for applications being installed onto the managed cluster
