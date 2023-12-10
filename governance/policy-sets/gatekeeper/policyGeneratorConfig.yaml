@@ -1,0 +1,30 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: gatekeeper-policyset
+placementBindingDefaults:
+  name: gatekeeper-policyset
+policyDefaults:
+  policyAnnotations: {"policy.open-cluster-management.io/disable-templates": "true"}
+  categories:
+    - CM Configuration Management
+  controls: 
+    - CM-2 Baseline Configuration
+  namespace: policies
+  remediationAction: enforce
+  severity: medium
+  policySets:
+    - gatekeeper-policyset
+  standards:
+    - NIST SP 800-53
+policies:
+  - name: container-deny-latest-tag
+    disabled: false
+    manifests:
+    - path: container-deny-latest-tag
+    
+policySets:
+  - description: A set of open policy agent gatekeeper admission controls that require best practices to be followed for applications being installed onto the managed cluster
+    name: gatekeeper-policyset
+...

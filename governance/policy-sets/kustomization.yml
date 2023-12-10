@@ -1,5 +1,6 @@
 generators:
-  - policyGeneratorConfig.yaml
+  - acm/policyGeneratorConfig.yaml
+  - gatekeeper/policyGeneratorConfig.yaml
 
 commonAnnotations:
   argocd.argoproj.io/compare-options: IgnoreExtraneous

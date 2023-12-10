@@ -3,31 +3,23 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
   name: configuration-policies
-
 policyDefaults:
-  namespace: "policies"
-  
+  namespace: "policies"  
   pruneObjectBehavior: "DeleteIfCreated"
-
   standards:
   - "NIST SP 800-53"
-
   categories:
   - "CM Configuration Management"
-  
   controls:
   - "CM-2 Baseline Configuration"
-  
-  complianceType: "musthave"
-  
+  complianceType: "musthave"  
   evaluationInterval:
     compliant: 1m
-    noncompliant: 45s
-  
-  remediationAction: "enforce"
-  
-  severity: "high"
-
+    noncompliant: 45s  
+  remediationAction: "enforce"  
+  severity: "medium"
+  policySets:
+  - acm-policyset
   placement:
     clusterSelectors:
       environment: "dev"
@@ -43,14 +35,7 @@ policies:
     disabled: false
     manifests:
     - path: install-postgresql-operator
-
-  - name: container-deny-latest-tag
-    categories:
-    - setup
-    controls: 
-    - setup
-    disabled: false
-    manifests:
-    - path: container-deny-latest-tag
-
+policySets:
+- description: 
+  name: acm-policyset
 ...
