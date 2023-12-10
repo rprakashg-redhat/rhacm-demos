@@ -4,7 +4,6 @@ kind: PolicyGenerator
 metadata:
   name: gatekeeper-policyset
 policyDefaults:
-  policyAnnotations: {"policy.open-cluster-management.io/disable-templates": "true"}
   categories:
     - CM Configuration Management
   controls: 
