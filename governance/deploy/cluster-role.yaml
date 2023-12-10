@@ -16,6 +16,7 @@ rules:
     resources:
       - policies
       - placementbindings
+      - policysets
   - verbs:
       - get
       - list
