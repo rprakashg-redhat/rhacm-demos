@@ -33,11 +33,10 @@ oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/
 oc apply -f https://raw.githubusercontent.com/rprakashg-redhat/rhacm-demos/main/governance/deploy/app.yaml
 ```
 
-Login to the ArgoCD console to view the status of the application. Additionally you can examine the topology view in RHACM hub cluster. You will see 4 policies created
-* check-resource-quota
-+ check-infra-nodes-on-cluster
-* install-compliance-operator (on OpenShift clusters)
-* install-openshift-gitops (on OpenShift clusters)
+Login to the ArgoCD console to view the status of the application. Additionally you can examine the topology view in RHACM hub cluster. You will see 3 policies and 2 policysets created
+* install-gatekeeper-operator
++ install-postgresql-operator
+* container-deny-latest-tag
 
 Hope this helps. If any questions reach out to me here or through my [blog](https://rprakashg.github.io)
 
