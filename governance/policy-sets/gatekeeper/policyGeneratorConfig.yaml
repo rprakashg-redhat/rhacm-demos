@@ -29,6 +29,7 @@ policyDefaults:
 
 policies:
   - name: container-deny-latest-tag
+    description: Policy to deny use of latest tag in container images in Daemonset, Deployment and StatefulSet
     disabled: false
     manifests:
     - path: gatekeeper/container-deny-latest-tag

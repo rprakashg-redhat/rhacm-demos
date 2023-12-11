@@ -29,11 +29,13 @@ policyDefaults:
 
 policies:    
   - name: install-gatekeeper-operator
+    description: Install Red Hat supported Gatekeeper operator and deploys an instance of Gatekeeper
     disabled: false
     manifests:
     - path: acm/install-gatekeeper-operator
 
   - name: install-postgresql-operator
+    description: Install Crunchy Postgresql operator from operator hub
     disabled: false
     manifests:
     - path: acm/install-postgresql-operator
