@@ -24,13 +24,7 @@ spec:
         - name: http
           containerPort: 8080
         env:
-        - name: POSTGRESCLUSTER_USER
-          valueFrom:
-            secretKeyRef:
-              name: hippo-pguser-hippo
-              key: user
-              optional: false
-        - name: POSTGRESCLUSTER_JDBC-URI
+        - name: POSTGRESCLUSTER_JDBC_URI
           valueFrom:
             secretKeyRef:
               name: hippo-pguser-hippo
