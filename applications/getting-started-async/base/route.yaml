@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: getting-started-async-route
+  labels:
+    app: getting-started-async
+    service: getting-started-async-service
+spec:
+  to:
+    kind: Service
+    name: getting-started-async-service
+  tls: null
+  port:
+    targetPort: http
