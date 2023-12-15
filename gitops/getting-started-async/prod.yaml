@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: "getting-started-async-app"
+  namespace: openshift-gitops
+spec:
+  generators:      
+  - clusterDecisionResource:
+      configMapRef: acm-placement
+      labelSelector:
+        matchLabels:
+          cluster.open-cluster-management.io/placement: production-clusters-placement
+      requeueAfterSeconds: 180
+
+  template:
+    metadata:
+      name: 'getting-started-async-app-{{name}}'
+    spec:
+      source:
+        repoURL: "https://github.com/rprakashg-redhat/rhacm-demos.git"
+        path: "applications/getting-started-async/overlays/production"
+        targetRevision: "HEAD"
+
+      destination:
+        namespace: "demos"
+        server:  "{{server}}"
+
+      project: default 
+
+  syncPolicy:
+    PreserveResourcesOnDeletion: false    
+    applicationsSync: sync
