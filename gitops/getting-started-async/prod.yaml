@@ -18,7 +18,7 @@ spec:
     spec:
       source:
         repoURL: "https://github.com/rprakashg-redhat/rhacm-demos.git"
-        path: "applications/getting-started-async/overlays/production"
+        path: "applications/getting-started-async/overlays/prod"
         targetRevision: "HEAD"
 
       destination:
