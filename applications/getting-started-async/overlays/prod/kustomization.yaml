@@ -9,4 +9,4 @@ patches:
     patch: |-
       - op: replace
         path: "/spec/template/spec/containers/0/image"
-        value: "replace mef"
+        value:  "ghcr.io/rprakashg-redhat/getting-started-async@sha256:d5695866ce702e492b8e17daa1d9dcecf68fbea4faf3c1db070ca25fa92f8de0"
