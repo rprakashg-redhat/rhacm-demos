@@ -1,0 +1,47 @@
+- name: install configure ACM
+  hosts: localhost
+  tasks:
+    - name: import static var data
+      include_vars:
+        dir: ./vars/static
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
+
+    # uninstall openshift gitops
+    - name: delete subscription
+      kubernetes.core.k8s:
+        validate_certs: false
+        apply: true
+        state: absent
+        resource_definition: "{{ lookup('template', 'templates/gitops.yaml.j2') | from_yaml }}"
+    
+    - name: delete cluster service version
+      kubernetes.core.k8s_info:
+        kind: ClusterServiceVersion
+        api_version: operators.coreos.com/v1alpha1
+        namespace: '{{ gitops.namespace }}'
+        state: absent
+      register: __gitops_uninstall_result
+      until: "(__gitops_install_result is not defined)"
+      retries: 10
+      delay: 10      
+
+    - name: create multi cluster hub
+      kubernetes.core.k8s:
+        validate_certs: false
+        apply: true
+        state: absent
+        resource_definition: "{{ lookup('template', 'templates/hub.yaml.j2') | from_yaml }}"
+
+    - name: wait until the hub is uninstalled
+      kubernetes.core.k8s_info:
+        kind: MultiClusterHub
+        name: '{{ hub }}'
+        api_version: operator.open-cluster-management.io/v1
+        namespace: '{{ namespace }}'
+        state: absent
+      register: __hub_uninstall_result
+      until: "(__hub_uninstall_result is not defined)"
+      retries: 50
+      delay: 20

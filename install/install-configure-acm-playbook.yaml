@@ -1,4 +1,4 @@
-- name: install ACM operators
+- name: install configure ACM
   hosts: localhost
   tasks:
     - name: import static var data
@@ -92,7 +92,7 @@
       kubernetes.core.k8s_info:
         kind: ClusterServiceVersion
         api_version: operators.coreos.com/v1alpha1
-        namespace: "openshift-gitops"
+        namespace: '{{ gitops.namespace }}'
       register: __gitops_install_result
       until: "(__gitops_install_result['resources'][0]['status']['phase'] is defined) and (__gitops_install_result['resources'][0]['status']['phase'] == 'Succeeded')"
       retries: 10
