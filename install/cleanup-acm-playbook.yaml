@@ -7,12 +7,18 @@
         ignore_unknown_extensions: True
         extensions:
           - yaml
+    
+    - name: import dynamic var data
+      include_vars:
+        dir: vars/dynamic
+        ignore_unknown_extensions: True
+        extensions:
+          - yaml
 
     # uninstall openshift gitops
-    - name: delete subscription
+    - name: delete gitops subscription
       kubernetes.core.k8s:
         validate_certs: false
-        apply: true
         state: absent
         resource_definition: "{{ lookup('template', 'templates/gitops.yaml.j2') | from_yaml }}"
     
@@ -23,14 +29,13 @@
         namespace: '{{ gitops.namespace }}'
         state: absent
       register: __gitops_uninstall_result
-      until: "(__gitops_install_result is not defined)"
+      until: "(__gitops_install_result == None)"
       retries: 10
       delay: 10      
 
-    - name: create multi cluster hub
+    - name: delete multi cluster hub
       kubernetes.core.k8s:
         validate_certs: false
-        apply: true
         state: absent
         resource_definition: "{{ lookup('template', 'templates/hub.yaml.j2') | from_yaml }}"
 
@@ -42,6 +47,37 @@
         namespace: '{{ namespace }}'
         state: absent
       register: __hub_uninstall_result
-      until: "(__hub_uninstall_result is not defined)"
+      until: "(__hub_uninstall_result == None )"
       retries: 50
       delay: 20
+    
+    - name: uninstall acm operator
+      kubernetes.core.k8s:
+        validate_certs: false
+        state: absent
+        resource_definition: "{{ lookup('template', 'templates/subscription.yaml.j2') | from_yaml }}"
+    - name: wait for operator to be uninstalled
+      kubernetes.core.k8s_info:
+        kind: ClusterServiceVersion
+        api_version: operators.coreos.com/v1alpha1
+        namespace: "{{ namespace }}"
+      register: __acm_operator_uninstall_result
+      until: "(__acm_operator_uninstall_result == None)"
+      retries: 15
+      delay: 15
+    
+    - name: delete the operator group
+      kubernetes.core.k8s:
+        validate_certs: false
+        state: absent
+        resource_definition: "{{ lookup('template', 'templates/operatorgroup.yaml.j2') | from_yaml }}"
+    
+    - name: delete open cluster management namespace
+      kubernetes.core.k8s:
+        state: absent
+        validate_certs: false
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: "{{ namespace }}"
