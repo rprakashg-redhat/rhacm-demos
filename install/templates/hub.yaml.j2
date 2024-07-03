@@ -6,4 +6,5 @@ metadata:
   namespace: {{ namespace }}
 spec: 
   imagePullSecret: rh-pullsecret
+  disableHubSelfManagement: {{ disableHubSelfManagement }} # this needs to be set to true if using hub of hubs
 ...

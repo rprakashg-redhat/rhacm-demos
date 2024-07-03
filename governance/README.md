@@ -14,7 +14,7 @@ Follow steps below to see this in action.
 
 * Install and Configure ACM by running the command below
 ```
-ansible-playbook install/install-configure-acm-playbook.yaml --extra-vars=token=${TOKEN}
+ansible-playbook install/install-configure-acm-playbook.yaml
 ```
 The Ansible playbook will install ACM operator, create a hub cluster and also installs OpenShift gitops operator
 

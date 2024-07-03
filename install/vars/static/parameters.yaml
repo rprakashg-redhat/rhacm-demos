@@ -6,6 +6,7 @@ namespace: "open-cluster-management"
 source: "redhat-operators"
 sourceNamespace: "openshift-marketplace"
 hub: "hub"
+disableHubSelfManagement: false
 pullsecret: rh-pullsecret
 gitops:
   name: gitops-operator-subscription
